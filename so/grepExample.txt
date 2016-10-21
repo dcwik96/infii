@@ -1,0 +1,7 @@
+To jest plik tekstowy do ćwiczeń 
+z użyciem polecenia grep. To polecenie 
+jest bardzo ważne do podstawowego
+przetwarzania plików w Linuxie.
+Dlatego to polecenie używamy w tych ćwiczeniach.
+
+

@@ -1,0 +1,10 @@
+To jest przykładowy plik tekstowy
+do użycia polecenia tr.
+To jest linijeczka z liczbami:  2 3 4 i 5.
+TO JEST LINIA Z DUŻYMI LITERAMI.
+To   jest   linia   ze        wieloma   spacjami	  i	   tabulatorami!
+Król karol, kupił królowej Karolinie,
+korale, koloru,
+	koralowego!
+ 
+ 

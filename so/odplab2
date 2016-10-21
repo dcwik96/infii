@@ -1,0 +1,23 @@
+1. cat -t myth.txt
+ cat -s myth.txt
+ cat -n myth.txt
+ less myth.txt   /slowo
+ pokazuje %, pobiera z pliku dane i przetwarza // wyswietla
+
+2. sort words.txt > nazwanowa
+ sort -c nazwa
+ -r
+ -u -f
+ -R
+
+3. head -c 5 nazwa
+ -n 5
+ tail -n 4 nazwa 
+ head -n 19 nazwa | tail -n 10 
+ Polecenie tail posiada opcję -f (ang. follow) umożliwiającą monitorowanie pliku. W odróżnieniu od podstawowego wywołania, gdzie polecenie tail wyświetla kilka ostatnich linii i kończy działanie, poniższa składnia umożliwia śledzenie zmian w pliku – kiedy nowe linie zostaną dodane do pliku przez inny proces, program zaktualizuje ekran. Ta opcja jest często używana do monitorowania plików logów.
+
+4. ls -A ~ | tee katalogi.txt
+ cat words.txt | tee out1.txt out2.txt
+ cat Iris.csv | tee -a out2.txt
+
+5. 

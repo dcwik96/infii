@@ -1,0 +1,12 @@
+Imie;Nazwisko;Stanowisko;Pensja
+Jan;Kowalski;Kierownik;10000
+Aleksandra;Nowak;Zastepca kierownika;8005
+Jonasz;Pachołkiewicz;Pracownik fizyczny;2503
+Maciej;Lewandowski;Kierowca;3507
+Jolanta;Regan;Kierownik działu PR;7001
+Magdalena;Olisadebe;Sprzątaczka;2008
+Arkadiusz;Piszczek;Sprzątacz;2306
+Bartosz;Arniem;Pracownik fizyczny;2752
+Weronika;Kortusz;Pracownik fizyczny;2659
+Magdalena;Kortusz;Sprzątaczka;2357
+Radosław;Jonkowski;Pracownik biurowy;2453
