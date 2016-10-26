@@ -1,0 +1,16 @@
+1.1     sed -n -e '/lekarz/p' danev2.csv
+  2     sed '0~10d' danev2.csv
+  3     sed '1d' danev2.csv
+  4     sed -n '/inżynier/{p;q;}' danev2.csv
+  5     sed 's/pedagog/pedagog opiekunczo-wchowawczy/g' danev2.csv
+  6     sed '/filolog/a\WYZEJ MNIE JEST FILOLOG\' danev2.csv | sed -n '/[fF][iI][lL][oO][lL]/{p}'
+  7     sed -n /.[F-I]/p' danev2.csv
+  8	sed 's/;/ /1' danev2.csv
+  9	
+
+2.1     pokazuje ile jest linii w pliku
+  2     pokazuje ostatnia pozycje
+  3     kopije plik dla windowsa
+  4     kopije plik na linuxa
+  5	wypisze zawartosc pliku i zapisze do new.txt
+
