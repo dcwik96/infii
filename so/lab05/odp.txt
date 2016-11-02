@@ -1,0 +1,16 @@
+1.1 awk ' /filolog/ { print }' daneCorrect.csv
+1.2 skrypt
+1.3 awk -F',' '  /Kwiatowa 56/ { ++x } END { print x } ' daneCorrect.csv
+1.4 awk ' NR >= 1 { print } ' daneCorrect.csv
+1.5 skrypt
+1.6 awk -F';' ' $2 ~ /F+/ || $2 ~ /A+/ { print } ' daneCorrect.csv
+1.7 awk -F';' '{s+=$6} END {print s/NR-1}' daneCorrect.csv
+1.8 skrypt
+1.9 domowe
+1.10 domowe
+~                                                                                       
+~                                                                                       
+~                                                                                       
+~                                                                                       
+~                                                                                       
+~                  

@@ -6,7 +6,7 @@
   6     sed '/filolog/a\WYZEJ MNIE JEST FILOLOG\' danev2.csv | sed -n '/[fF][iI][lL][oO][lL]/{p}'
   7     sed -n /.[F-I]/p' danev2.csv
   8	sed 's/;/ /1' danev2.csv
-  9	
+  9
 
 2.1     pokazuje ile jest linii w pliku
   2     pokazuje ostatnia pozycje
@@ -14,3 +14,42 @@
   4     kopije plik na linuxa
   5	wypisze zawartosc pliku i zapisze do new.txt
 
+3.1     set | grep HOME
+        printenv SHELL
+        printenv PATH
+
+4.      set zmienna
+        set | grep zmienna ( wyswietla _=zmienna    przy kolejnym wyszukaniu nie wyswietla )
+
+
+5.      export zmienna  	zmienna środowiskową
+
+	A note about env/set command
+        The env will only display a list of environment variables that have been exported and it will not show all bash variables.
+        The set command allows you to change the values of shell options and set the positional parameters, or to display the names and values of shell variables.
+        If no options or arguments are supplied, set displays the names and values of all shell variables and functions,
+        sorted according to the current locale, in a format that may be reused as input for setting or resetting the currently-set variables.
+        Hence, I recommend that you use printenv command to dump the list of all shell variables on screen.
+
+6.	PATH=$PATH:/home/studinf/wdziurdzia/Pobrane/
+        export PATH
+
+        simplecalculator.bash:
+        #!/bin/bash
+        "/home/Notebook/Downloads/Simple Calculator.jar"
+
+        chmod 777 simplecalculator.bash
+        echo PATH
+
+        simplecalculator.bash
+
+
+7.    .bashrc ... echo "Witaj" $USER
+      .bash_logout  ...  echo "Twoja maszyna cie zegna" $HOSTNAME
+      alias 'sigma'='ssh dcwik@sigma.ug.edu.pl'
+      alias 'gpush'='git push'
+      alias 'gcom'='git commit'
+
+      ~/.bash_profile – plik z konfiguracją użytkownika (jest w końcu w jego katalogu domowym), dla tzw. login shelli
+      ~/.bashrc – plik z konfiguracją użytkownika, w przypadku gdy bash nie jest uruchomiony jako login shell
+      ~/.bash_logout – interpretowany przy wyjściu z login shella
