@@ -1,23 +1,28 @@
-# 1 "a.c"
+# 1 "projekt.c"
 # 1 "<built-in>"
 # 1 "<command-line>"
 # 1 "/usr/include/stdc-predef.h" 1 3 4
 # 1 "<command-line>" 2
-# 1 "a.c"
+# 1 "projekt.c"
 # 1 "/usr/include/stdio.h" 1 3 4
 # 27 "/usr/include/stdio.h" 3 4
 # 1 "/usr/include/features.h" 1 3 4
 # 367 "/usr/include/features.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 1 3 4
-# 410 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 411 "/usr/include/x86_64-linux-gnu/sys/cdefs.h" 2 3 4
+# 1 "/usr/include/sys/cdefs.h" 1 3 4
+# 410 "/usr/include/sys/cdefs.h" 3 4
+# 1 "/usr/include/bits/wordsize.h" 1 3 4
+# 411 "/usr/include/sys/cdefs.h" 2 3 4
 # 368 "/usr/include/features.h" 2 3 4
 # 391 "/usr/include/features.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/gnu/stubs.h" 1 3 4
-# 10 "/usr/include/x86_64-linux-gnu/gnu/stubs.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/gnu/stubs-64.h" 1 3 4
-# 11 "/usr/include/x86_64-linux-gnu/gnu/stubs.h" 2 3 4
+# 1 "/usr/include/gnu/stubs.h" 1 3 4
+
+
+
+
+
+
+# 1 "/usr/include/gnu/stubs-32.h" 1 3 4
+# 8 "/usr/include/gnu/stubs.h" 2 3 4
 # 392 "/usr/include/features.h" 2 3 4
 # 28 "/usr/include/stdio.h" 2 3 4
 
@@ -29,13 +34,13 @@
 # 216 "/usr/lib/gcc/x86_64-linux-gnu/5/include/stddef.h" 3 4
 
 # 216 "/usr/lib/gcc/x86_64-linux-gnu/5/include/stddef.h" 3 4
-typedef long unsigned int size_t;
+typedef unsigned int size_t;
 # 34 "/usr/include/stdio.h" 2 3 4
 
-# 1 "/usr/include/x86_64-linux-gnu/bits/types.h" 1 3 4
-# 27 "/usr/include/x86_64-linux-gnu/bits/types.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/wordsize.h" 1 3 4
-# 28 "/usr/include/x86_64-linux-gnu/bits/types.h" 2 3 4
+# 1 "/usr/include/bits/types.h" 1 3 4
+# 27 "/usr/include/bits/types.h" 3 4
+# 1 "/usr/include/bits/wordsize.h" 1 3 4
+# 28 "/usr/include/bits/types.h" 2 3 4
 
 
 typedef unsigned char __u_char;
@@ -51,8 +56,11 @@ typedef unsigned short int __uint16_t;
 typedef signed int __int32_t;
 typedef unsigned int __uint32_t;
 
-typedef signed long int __int64_t;
-typedef unsigned long int __uint64_t;
+
+
+
+__extension__ typedef signed long long int __int64_t;
+__extension__ typedef unsigned long long int __uint64_t;
 
 
 
@@ -60,67 +68,67 @@ typedef unsigned long int __uint64_t;
 
 
 
-typedef long int __quad_t;
-typedef unsigned long int __u_quad_t;
-# 121 "/usr/include/x86_64-linux-gnu/bits/types.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/typesizes.h" 1 3 4
-# 122 "/usr/include/x86_64-linux-gnu/bits/types.h" 2 3 4
+__extension__ typedef long long int __quad_t;
+__extension__ typedef unsigned long long int __u_quad_t;
+# 121 "/usr/include/bits/types.h" 3 4
+# 1 "/usr/include/bits/typesizes.h" 1 3 4
+# 122 "/usr/include/bits/types.h" 2 3 4
 
 
-typedef unsigned long int __dev_t;
-typedef unsigned int __uid_t;
-typedef unsigned int __gid_t;
-typedef unsigned long int __ino_t;
-typedef unsigned long int __ino64_t;
-typedef unsigned int __mode_t;
-typedef unsigned long int __nlink_t;
-typedef long int __off_t;
-typedef long int __off64_t;
-typedef int __pid_t;
-typedef struct { int __val[2]; } __fsid_t;
-typedef long int __clock_t;
-typedef unsigned long int __rlim_t;
-typedef unsigned long int __rlim64_t;
-typedef unsigned int __id_t;
-typedef long int __time_t;
-typedef unsigned int __useconds_t;
-typedef long int __suseconds_t;
+__extension__ typedef __u_quad_t __dev_t;
+__extension__ typedef unsigned int __uid_t;
+__extension__ typedef unsigned int __gid_t;
+__extension__ typedef unsigned long int __ino_t;
+__extension__ typedef __u_quad_t __ino64_t;
+__extension__ typedef unsigned int __mode_t;
+__extension__ typedef unsigned int __nlink_t;
+__extension__ typedef long int __off_t;
+__extension__ typedef __quad_t __off64_t;
+__extension__ typedef int __pid_t;
+__extension__ typedef struct { int __val[2]; } __fsid_t;
+__extension__ typedef long int __clock_t;
+__extension__ typedef unsigned long int __rlim_t;
+__extension__ typedef __u_quad_t __rlim64_t;
+__extension__ typedef unsigned int __id_t;
+__extension__ typedef long int __time_t;
+__extension__ typedef unsigned int __useconds_t;
+__extension__ typedef long int __suseconds_t;
 
-typedef int __daddr_t;
-typedef int __key_t;
-
-
-typedef int __clockid_t;
+__extension__ typedef int __daddr_t;
+__extension__ typedef int __key_t;
 
 
-typedef void * __timer_t;
+__extension__ typedef int __clockid_t;
 
 
-typedef long int __blksize_t;
+__extension__ typedef void * __timer_t;
+
+
+__extension__ typedef long int __blksize_t;
 
 
 
 
-typedef long int __blkcnt_t;
-typedef long int __blkcnt64_t;
+__extension__ typedef long int __blkcnt_t;
+__extension__ typedef __quad_t __blkcnt64_t;
 
 
-typedef unsigned long int __fsblkcnt_t;
-typedef unsigned long int __fsblkcnt64_t;
+__extension__ typedef unsigned long int __fsblkcnt_t;
+__extension__ typedef __u_quad_t __fsblkcnt64_t;
 
 
-typedef unsigned long int __fsfilcnt_t;
-typedef unsigned long int __fsfilcnt64_t;
+__extension__ typedef unsigned long int __fsfilcnt_t;
+__extension__ typedef __u_quad_t __fsfilcnt64_t;
 
 
-typedef long int __fsword_t;
+__extension__ typedef int __fsword_t;
 
-typedef long int __ssize_t;
+__extension__ typedef int __ssize_t;
 
 
-typedef long int __syscall_slong_t;
+__extension__ typedef long int __syscall_slong_t;
 
-typedef unsigned long int __syscall_ulong_t;
+__extension__ typedef unsigned long int __syscall_ulong_t;
 
 
 
@@ -129,10 +137,10 @@ typedef __quad_t *__qaddr_t;
 typedef char *__caddr_t;
 
 
-typedef long int __intptr_t;
+__extension__ typedef int __intptr_t;
 
 
-typedef unsigned int __socklen_t;
+__extension__ typedef unsigned int __socklen_t;
 # 36 "/usr/include/stdio.h" 2 3 4
 # 44 "/usr/include/stdio.h" 3 4
 struct _IO_FILE;
@@ -368,7 +376,7 @@ typedef _G_fpos_t fpos_t;
 
 
 # 164 "/usr/include/stdio.h" 3 4
-# 1 "/usr/include/x86_64-linux-gnu/bits/stdio_lim.h" 1 3 4
+# 1 "/usr/include/bits/stdio_lim.h" 1 3 4
 # 165 "/usr/include/stdio.h" 2 3 4
 
 
@@ -804,8 +812,8 @@ extern void perror (const char *__s);
 
 
 
-# 1 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h" 1 3 4
-# 26 "/usr/include/x86_64-linux-gnu/bits/sys_errlist.h" 3 4
+# 1 "/usr/include/bits/sys_errlist.h" 1 3 4
+# 26 "/usr/include/bits/sys_errlist.h" 3 4
 extern int sys_nerr;
 extern const char *const sys_errlist[];
 # 854 "/usr/include/stdio.h" 2 3 4
@@ -844,34 +852,35 @@ extern int ftrylockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__));
 # 942 "/usr/include/stdio.h" 3 4
 
-# 2 "a.c" 2
+# 2 "projekt.c" 2
 
 
-# 3 "a.c"
-int main(void)
-{
-  int x=-1;
-  int x2=0;
-
+# 3 "projekt.c"
+int main(void) {
+  char *s = "fqr  b qabxx xryc pqr";
+  int x,y;
   asm volatile (
     ".intel_syntax noprefix;"
-
-    "mov eax,%1;"
-    "shl eax;"
-    "jc zapalony;"
-    "mov eax,17;"
-    "jmp koniec;"
-    "zapalony:"
-      "mov eax,12;"
-    "koniec:"
-      "mov %0, eax;"
-# 38 "a.c"
+    "xor eax,eax;"
+    "xor ebx,ebx;"
+    "xor ecx,ecx;"
+    "mov ebx,%2;"
+  "petla:"
+    "mov al,[ebx];"
+    "sub al, 0;"
+    "cmp al, 'q';"
+    "jz wyjscie;"
+    "inc ecx;"
+    "inc ebx;"
+    "jmp petla;"
+  "wyjscie:"
+    "mov %0, eax;"
+    "mov %1,ecx;"
     ".att_syntax prefix;"
-    :"=r" (x2)
-    :"r" (x)
-    :"eax"
+    :"=r" (x), "=r" (y)
+    :"r" (s)
+    :"eax","ebx","ecx"
   );
-
-  printf("x=%d x2=%d",x,x2);
+  printf("%hd,%hd\n",x,y );
   return 0;
 }

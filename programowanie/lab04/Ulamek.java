@@ -36,7 +36,7 @@ class Ulamek{
       System.out.println("Miales wybrac miedzy jeden a dwa ... I caly misterny plan w piiiii");
   }
 
-  static void add(Ulamek mianownik){
+  void add(Ulamek mianownik){
     if(ul1.mianownik==ul2.mianownik)
     System.out.println("ok");
   }
@@ -58,6 +58,9 @@ class Ulamek{
     int choice = in.nextInt();
     ul1.AfterPick(choice);
     ul2.AfterPick(choice);
-    add(ul1,ul2);
+    ul1.add(ul2);
+    }
+
+    }
   }
 }
