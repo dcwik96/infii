@@ -28,3 +28,5 @@ int main(void) {
   printf("%hd,%hd\n",x,y );
   return 0;
 }
+
+//gcc projekt.c -o projekt -m32 -save-temps

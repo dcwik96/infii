@@ -8,9 +8,6 @@
 1.8 skrypt
 1.9 domowe
 1.10 domowe
-~                                                                                       
-~                                                                                       
-~                                                                                       
-~                                                                                       
-~                                                                                       
-~                  
+                                                                                       
+2. ./odp52.awk 52.txt
+3. ./skrypt53.awk n=3 liczba.txt

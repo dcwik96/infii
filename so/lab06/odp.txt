@@ -1,0 +1,13 @@
+1. ./zad1.sh    Tekst wprowadzony po uruchomieniu skryptu
+2. ./zad2.sh    Podaj liczbe po uruchomieniu skryptu
+3a. ./zad3.sh 1 2 costam
+3b. ./zad3b.sh
+4. ./zad4.sh - nie pokazuje source zad4.sh - pokazuje
+5. ./zad5.sh
+6. ls -l  0
+   echo ;;  2
+   $/usr/bin 127
+   foo 127
+   read (nastepnie wcisnac kombinacje ctrl+c) 2
+   let "zmienna= 40/0"  1
+   http://www.tldp.org/LDP/abs/html/exitcodes.html
