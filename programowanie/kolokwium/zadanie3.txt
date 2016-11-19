@@ -1,0 +1,10 @@
+Dawid Ćwik
+238137 -- nieparzyste
+
+obiekt - Obiekt jest fizyczną "manifestacją" Klasy. Oznacza to że ma własne miejsce w pamięci komputera i możemy nim manipulować. Jeżeli mówimy o obiekcie samochód będącym instancją Klasy Samochód to oznacza, że mówimy o konkretnym samochodzie.
+         Obiekt definiujemy jako Zmienną.
+konstruktor - Konstruktor to specyficzna metoda wywoływana by stworzyć Obiekt. Konstruktor jest wywoływany za każdym razem gdy tworzony jest nowy obiekt.
+              Można go traktować jako specyficzną metodę, która zwraca nową instancję klasy, ale nie ma tego wpisanego w sygnaturze (jest to jednak bardzo uproszczone podejście).
+              Konstruktor może przyjmować parametry. Konstruktor bezparametrowy nazywany jest czasami konstruktorem domyślnym ponieważ, jeżeli nie zdefiniowano w klasie żadnego konstruktora to kompilator umieści w niej konstruktor bezparametrowy.
+              Jeżeli zdefiniujemy w klasie choć jeden konstruktor z parametrami to kompilator nie wygeneruje konstruktora domyślnego. Musimy go sami zdefiniować.
+pole - Właściwość Obiektu danej Klasy. Samochód może mieć kolor. Pole Klasy rozumiemy właściwość lub relację MA. Pole jest zmienną która należy do klasy.

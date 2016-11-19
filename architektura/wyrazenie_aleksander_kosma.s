@@ -27,7 +27,7 @@ main:
 	movl	$.LC0, -36(%ebp)
 	movl	-36(%ebp), %edx
 #APP
-# 7 "wyrazenie_aleksander_kosma.c" 1
+# 8 "wyrazenie_aleksander_kosma.c" 1
 	.intel_syntax noprefix;mov ebx, %edx;mov eax, 0;mov ecx, 0;petla:mov ecx, 0;cmp byte ptr [ebx], 'a';jne sprawdzb;inc ebx;inc eax;inc ecx;jmp sprawdznotr;sprawdzb:cmp byte ptr [ebx], 'b';jne sprawdz0;inc ebx;inc eax;inc ecx;sprawdznotr:cmp byte ptr [ebx], 'r';jne sprawdz1;inc ebx;inc ecx;jmp petla;szukanier:cmp byte ptr [ebx], 'r';jne sprawdz1;inc ecx;jmp wyjscie;sprawdz0:cmp byte ptr [ebx], 0;je wyjscie;inc ebx;inc eax;jmp petla;sprawdz1:cmp byte ptr [ebx], 0;je wyjscie;inc ebx;inc ecx;jmp szukanier;wyjscie:mov %esi, eax;mov %edx, ecx;.att_syntax prefix;
 # 0 "" 2
 #NO_APP

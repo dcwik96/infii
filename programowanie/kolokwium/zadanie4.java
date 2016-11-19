@@ -1,3 +1,9 @@
+/*Ułamki zwykłe
+
+Należy napisać program, który będzie wykonywał działania na ułamkach zwykłych, czyli takich, które posiadają całkowity licznik i całkowity mianownik.
+Należy zaimplementować podstawowe operacje, takie jak mnożenie, dzielenie, dodawanie i odejmowanie. Ułamek reprezentowany przez dwie liczby powinien być możliwy do wyświetlenia w postaci np. dwóch liczb z ukośną kreską dzielenia, lub na żądanie w postaci np. ułamka dziesiętnego.
+Należy zadbać o obsługę przypadku, gdy mianownik takiego ułamka ustawiony zostanie na zero.
+*/
 import java.util.Scanner;
 
 class Ulamek{

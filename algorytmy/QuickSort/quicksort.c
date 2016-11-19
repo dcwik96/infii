@@ -1,3 +1,7 @@
+//Dawid Ćwik
+//4.5
+//Informatyka II
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

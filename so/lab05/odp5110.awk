@@ -2,7 +2,7 @@
 
 {
 z = split($0, array, " ")
-for (i = 1; i <= NR; i++)
+for (i = 1; i <= z; i++)
    ++table[array[i]]
 }
 END {

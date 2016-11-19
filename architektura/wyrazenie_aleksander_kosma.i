@@ -859,6 +859,7 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 int main(){
 
    char* s = "fqr  b qabxx xryc pqr";
+
     int x,y;
    asm volatile (
           ".intel_syntax noprefix;"

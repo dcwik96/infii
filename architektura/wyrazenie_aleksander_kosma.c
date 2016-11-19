@@ -3,6 +3,7 @@
 int main(){
 
 	  char* s = "fqr  b qabxx xryc pqr";
+//char* s = "abr";
     int x,y;
 	  asm volatile (
           ".intel_syntax noprefix;"
