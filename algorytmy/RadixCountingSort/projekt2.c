@@ -4,8 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 #define MDN 255
-#define MIN_A 32
-#define MAX_A 128
+#define MIN 32
+#define MAX 128
 
 char **arr, **arr2, **tmp;
 unsigned int *Length;
@@ -21,7 +21,7 @@ int MaxLength(char **arr,int lines){
   return max;
 }
 
-void ToEqualLength(char **arr, int lines, int MAXLength){
+void Equal(char **arr, int lines, int MAXLength){
   int i, j;
   for (i=0; i<lines; i++)
     for (j=strlen(arr[i]); j<MAXLength; j++)
@@ -30,21 +30,17 @@ void ToEqualLength(char **arr, int lines, int MAXLength){
 
 void CountingSort(char **arr, char **arr2, int lines, int p){
   int i, j;
-  int C[MAX_A];
-  for (i=0; i<MAX_A; i++)
+  int C[MAX];
+  for (i=0; i<MAX; i++)
     C[i]=0;
   for (j=0; j<lines; j++)
     C[(int)arr[j][p]]++;
-  for (i=MIN_A; i<MAX_A; i++)
+  for (i=MIN; i<MAX; i++)
     C[i]+=C[i-1];
   for (j=lines-1; j>=0; j--){
     arr2[C[(int)arr[j][p]]-1]=arr[j];
     C[(int)arr[j][p]]--;
   }
-  for (i=0; i<lines; i++)
-    printf("%s\n", arr[i]);
-
-    printf("\n");
 }
 
 void RadixSort(char **arr, char **arr2, int lines, int MAXLength){
@@ -88,13 +84,8 @@ int main() {
   Length = (unsigned int*) malloc(lines * sizeof(unsigned int*));
   int MAXLength = MaxLength(arr, lines);
 
-  for (i=0; i<lines; i++)
-    printf("%s\n", arr[i]);
 
-    printf("\n");
-
-
-  ToEqualLength(arr, lines, MAXLength);
+  Equal(arr, lines, MAXLength);
 
   RadixSort(arr, arr2, lines, MAXLength);
 

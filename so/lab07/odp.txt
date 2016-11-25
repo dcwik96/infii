@@ -1,0 +1,4 @@
+fg - uruchamia na nowo zatrzymane (Ctrl-Z) zadanie, na pierwszym planie
+bg – uruchamia na nowo zatrzymane (Ctrl-Z) zadanie, //ale w tle, tak jakby zostało ono uruchomione z &
+kill – m.in zabija podany proces, wysyla sygnal
+ctrl c - oddzialuje na potomka, a nie na rodzica

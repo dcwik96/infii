@@ -856,31 +856,78 @@ extern void funlockfile (FILE *__stream) __attribute__ ((__nothrow__ , __leaf__)
 
 
 # 3 "projekt.c"
-int main(void) {
-  char *s = "fqr  b qabxx xryc pqr";
-  int x,y;
-  asm volatile (
-    ".intel_syntax noprefix;"
-    "xor eax,eax;"
-    "xor ebx,ebx;"
-    "xor ecx,ecx;"
-    "mov ebx,%2;"
-  "petla:"
-    "mov al,[ebx];"
-    "sub al, 0;"
-    "cmp al, 'q';"
-    "jz wyjscie;"
+int main(){
+
+ char* s = "fqr  b qabxx xryc pqr";
+
+
+        int x,y;
+   asm volatile (
+      ".intel_syntax noprefix;"
+        "mov ebx, %2;"
+        "mov eax, 0;"
+        "mov ecx, 0;"
+
+      "petla:"
+        "mov ecx, 0;"
+        "cmp byte ptr [ebx], 'b';"
+        "jne sprawdza;"
+        "inc ebx;"
+        "inc eax;"
+        "inc ecx;"
+        "jmp sprawdznor;"
+
+      "sprawdza:"
+        "cmp byte ptr [ebx], 'a';"
+        "jne sprawdz0;"
+        "inc ebx;"
+        "inc eax;"
+        "inc ecx;"
+
+      "sprawdznor:"
+      "cmp byte ptr [ebx], 0;"
+      "je wyjscie7;"
+
+
+        "cmp byte ptr [ebx], 'r';"
+        "jne sprawdz1;"
+        "inc ebx;"
+        "inc ecx;"
+        "jmp petla;"
+
+      "szukanier:"
+        "cmp byte ptr [ebx], 'r';"
+        "jne sprawdz1;"
     "inc ecx;"
-    "inc ebx;"
-    "jmp petla;"
-  "wyjscie:"
-    "mov %0, eax;"
-    "mov %1,ecx;"
-    ".att_syntax prefix;"
-    :"=r" (x), "=r" (y)
-    :"r" (s)
-    :"eax","ebx","ecx"
-  );
-  printf("%hd,%hd\n",x,y );
-  return 0;
+        "jmp wyjscie;"
+
+      "sprawdz0:"
+        "cmp byte ptr [ebx], 0;"
+        "je wyjscie;"
+        "inc ebx;"
+        "inc eax;"
+        "jmp petla;"
+
+      "sprawdz1:"
+        "cmp byte ptr [ebx], 0;"
+        "je wyjscie;"
+        "inc ebx;"
+        "inc ecx;"
+        "jmp szukanier;"
+
+      "wyjscie7:"
+        "mov ecx, 0;"
+
+      "wyjscie:"
+        "add eax, -1;"
+        "mov %0, eax;"
+        "mov %1, ecx;"
+
+        ".att_syntax prefix;"
+        :"=r" (x), "=r" (y)
+        :"r" (s)
+        :"al","ebx", "eax", "ecx"
+    );
+    printf("[pq][^r]=%hd +r=%hd\n", x, y);
+    return 0;
 }
