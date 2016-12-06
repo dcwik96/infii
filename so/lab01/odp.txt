@@ -1,0 +1,4 @@
+1.  dom.txt ----rwx--- 070;
+    kot.txt ---x-w-r-- 124;
+    main.c -rw---x--- 610;
+    styl.java 777

@@ -1,0 +1,331 @@
+
+Polecenie SED w systemie Linux
+
+Mateusz Miotk
+
+23 października 2016
+Historia
+
+Narzędzie SED (ang. stream editor) to edytor wsadowy (nieinteraktywny). Jego zadaniem jest transformacja strumienia danych wyjściowych, pochodzących z pliku bądź standardowego wejścia. Edytor sed bardzo często używany jest jako filtr w potoku. Jest on znacznie efektywniejszy w działaniu niż edytor interaktywny, ponieważ tylko raz przetwarza dane wejściowe.
+Składnia
+
+Polecenie sed ma następującą składnię:
+
+sed [-n] program [lista-plikow]
+sed [-n] -f plik_programu [lista-plikow]
+
+Opcje programu SED
+
+    -f plik-programu (powoduje, że narzędzie sed odczytuje program ze wskazanego pliku-programu zamiast z wiersza powłoki)
+    -i[sufiks] (pozwala na lokalną edycję pliku. Jeśli jest sufiks to sed utworzy kopię zapasową przetwarzanego pliku)
+    -n (powoduje, że narzędze sed nie przekazuje wierszy do stdout)
+
+Przykłady
+
+Rozważmy następujący plik:
+
+cat sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Warszawa;
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+3: Jan Titit, Chrzanowskiego 15, Gdańsk Gdańsk;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+8: Maciej Hirsz, Wałowa 15, Gdańsk;
+9: Grzegorz Mistrz, Reja 18, Gdańsk;
+
+Podstawowa funkcjonalność - zamiana słów. Zamienimy słowo Gdańsk na Trójmiasto.
+
+sed 's/Gdańsk/Trójmiasto/' sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Warszawa;
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+3: Jan Titit, Chrzanowskiego 15, Trójmiasto Gdańsk;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+8: Maciej Hirsz, Wałowa 15, Trójmiasto;
+9: Grzegorz Mistrz, Reja 18, Trójmiasto;
+
+Opcja s (ang. substitute) zastępuje wzorzec danym słowem.
+
+Teraz podmieńmy wiele słów tego pliku.
+
+sed 's/Gdańsk/Trójmiasto/ ; s/Warszawa/Stolica Polski/' sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Stolica Polski;
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+3: Jan Titit, Chrzanowskiego 15, Trójmiasto Gdańsk;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+8: Maciej Hirsz, Wałowa 15, Trójmiasto;
+9: Grzegorz Mistrz, Reja 18, Trójmiasto;
+
+lub inaczej
+
+sed -e 's/Gdańsk/Trójmiasto/' -e 's/Warszawa/Stolica Polski/' sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Stolica Polski;
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+3: Jan Titit, Chrzanowskiego 15, Trójmiasto Gdańsk;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+8: Maciej Hirsz, Wałowa 15, Trójmiasto;
+9: Grzegorz Mistrz, Reja 18, Trójmiasto;
+
+Polecenie sed może wczytywać opcje z pliku. Rozpatrzmy następujący plik:
+
+cat sedCommands.txt
+
+s/Gdańsk/Stolica Pomorza/
+s/Kraków/Stolica Małopolski/
+s/Warszawa/Stolica Polski/
+
+Wczytajmy te komendy do polecenia sed
+
+sed -f sedCommands.txt sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Stolica Polski;
+2: Adam Nowak, Piłsudzkiego 22, Stolica Małopolski;
+3: Jan Titit, Chrzanowskiego 15, Stolica Pomorza Gdańsk;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+8: Maciej Hirsz, Wałowa 15, Stolica Pomorza;
+9: Grzegorz Mistrz, Reja 18, Stolica Pomorza;
+
+Pokazanie tylko linii, w której dokonała się zmiana.
+
+sed -n 's/Gdańsk/Trójmiasto/p'  sedOne.txt
+
+3: Jan Titit, Chrzanowskiego 15, Trójmiasto Gdańsk;
+8: Maciej Hirsz, Wałowa 15, Trójmiasto;
+9: Grzegorz Mistrz, Reja 18, Trójmiasto;
+
+Opcja -n bierze linie, do których dokonała się zmiana, zaś p na końcu odpowiada za wypisanie linii. Bez tej opcji dostaniemy coś takiego:
+
+sed -n 's/Gdańsk/Trójmiasto/' sedOne.txt
+
+Użycie polecenia sed konkretnie do wybranej linii
+
+sed '/Jan/ s/Gdańsk/Trójmiasto/g' sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Warszawa;
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+3: Jan Titit, Chrzanowskiego 15, Trójmiasto Trójmiasto;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+8: Maciej Hirsz, Wałowa 15, Gdańsk;
+9: Grzegorz Mistrz, Reja 18, Gdańsk;
+
+To polecenie wszystkim liniom, która ma słowo Jan podmienia Gdańsk na Trójmiasto. g na końcu odpowiada za wszystkie słowa w linii jakie napotkasz. Bez tego efekt będzie następujący:
+
+sed '/Jan/ s/Gdańsk/Trójmiasto/' sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Warszawa;
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+3: Jan Titit, Chrzanowskiego 15, Trójmiasto Gdańsk;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+8: Maciej Hirsz, Wałowa 15, Gdańsk;
+9: Grzegorz Mistrz, Reja 18, Gdańsk;
+
+Usunięcie linii, które zawierają słowo Gdańsk
+
+sed '/Gdańsk/d' sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Warszawa;
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+
+d na końcu oznacza usuń (ang. delete)
+
+Usuwanie linii, które nie zawierają słowa Gdańsk
+
+sed '/Gdańsk/!d' sedOne.txt
+
+3: Jan Titit, Chrzanowskiego 15, Gdańsk Gdańsk;
+8: Maciej Hirsz, Wałowa 15, Gdańsk;
+9: Grzegorz Mistrz, Reja 18, Gdańsk;
+
+Rozważmy teraz następujący plik:
+
+cat sedTwo.txt
+
+Spis ludzi oraz ich adresy:
+++++++++++++++++++++++++++
+Jan        Kowalski, Woronicza 17, Warszawa
+
+
+Adam Nowak, Piłsudzkiego 22, Kraków
+    Jan Titit, Chrzanowskiego 15, Gdańsk
+Magdalena Heheszka, Kolejowa 23, Kiełpino Górne
+  Hiacynta Róża, Dworcowa 1,                   Kartuzy
+Joanna Rutkowska, Przy rzeźni 8, Chojnice
+                       Arkadiusz Sczypior,              Towarowa 9, Kościerzyna
+Maciej Hirsz,       Wałowa 15, Gdańsk
+             Grzegorz Mistrz, Reja 18, Gdańsk
+
+Usuwanie pustych wierszy
+
+sed '/^$/d' sedTwo.txt
+
+Spis ludzi oraz ich adresy:
+++++++++++++++++++++++++++
+Jan        Kowalski, Woronicza 17, Warszawa
+Adam Nowak, Piłsudzkiego 22, Kraków
+    Jan Titit, Chrzanowskiego 15, Gdańsk
+Magdalena Heheszka, Kolejowa 23, Kiełpino Górne
+  Hiacynta Róża, Dworcowa 1,                   Kartuzy
+Joanna Rutkowska, Przy rzeźni 8, Chojnice
+                       Arkadiusz Sczypior,              Towarowa 9, Kościerzyna
+Maciej Hirsz,       Wałowa 15, Gdańsk
+             Grzegorz Mistrz, Reja 18, Gdańsk
+
+Usunięcie spacji na początku linii
+
+sed 's/^  *//' sedTwo.txt
+
+Spis ludzi oraz ich adresy:
+++++++++++++++++++++++++++
+Jan        Kowalski, Woronicza 17, Warszawa
+
+
+Adam Nowak, Piłsudzkiego 22, Kraków
+Jan Titit, Chrzanowskiego 15, Gdańsk
+Magdalena Heheszka, Kolejowa 23, Kiełpino Górne
+Hiacynta Róża, Dworcowa 1,                   Kartuzy
+Joanna Rutkowska, Przy rzeźni 8, Chojnice
+Arkadiusz Sczypior,              Towarowa 9, Kościerzyna
+Maciej Hirsz,       Wałowa 15, Gdańsk
+Grzegorz Mistrz, Reja 18, Gdańsk
+
+Usunięcie wszystkich spacji we wszystkich liniach
+
+sed 's/^  *//' sedTwo.txt | sed 's/  */ /g'
+
+Spis ludzi oraz ich adresy:
+++++++++++++++++++++++++++
+Jan Kowalski, Woronicza 17, Warszawa
+
+
+Adam Nowak, Piłsudzkiego 22, Kraków
+Jan Titit, Chrzanowskiego 15, Gdańsk
+Magdalena Heheszka, Kolejowa 23, Kiełpino Górne
+Hiacynta Róża, Dworcowa 1, Kartuzy
+Joanna Rutkowska, Przy rzeźni 8, Chojnice
+Arkadiusz Sczypior, Towarowa 9, Kościerzyna
+Maciej Hirsz, Wałowa 15, Gdańsk
+Grzegorz Mistrz, Reja 18, Gdańsk
+
+Rozpatrzmy teraz prościutki plik .csv
+
+cat sedThree.txt
+
+first:second
+one:two
+
+Zmieńmy kolejność kolumn w tym pliku
+
+sed 's/\(.*\):\(.*\)/ \2:\1 /' sedThree.txt
+
+ second:first
+ two:one
+
+Polecenie sed pogrupowało to jako kolumny, zatem możemy odnosić się do nich jak do numeru (stąd :).
+
+Wróćmy do naszego pliku
+
+cat sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Warszawa;
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+3: Jan Titit, Chrzanowskiego 15, Gdańsk Gdańsk;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+8: Maciej Hirsz, Wałowa 15, Gdańsk;
+9: Grzegorz Mistrz, Reja 18, Gdańsk;
+
+Dodajmy linie do jakiegoś wzorca
+
+sed '/Maciej/i\Tu dodałem linię dla Maćka\' sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Warszawa;
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+3: Jan Titit, Chrzanowskiego 15, Gdańsk Gdańsk;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+Tu dodałem linię dla Maćka
+8: Maciej Hirsz, Wałowa 15, Gdańsk;
+9: Grzegorz Mistrz, Reja 18, Gdańsk;
+
+lub
+
+sed '/Maciej/a\Tu dodałem linię dla Maćka\' sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Warszawa;
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+3: Jan Titit, Chrzanowskiego 15, Gdańsk Gdańsk;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+8: Maciej Hirsz, Wałowa 15, Gdańsk;
+Tu dodałem linię dla Maćka
+9: Grzegorz Mistrz, Reja 18, Gdańsk;
+
+Jaka jest różnica?
+
+Usunięcie linii 2,4,6 z pliku
+
+sed -e '2d' -e '4d' -e '6d' sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Warszawa;
+3: Jan Titit, Chrzanowskiego 15, Gdańsk Gdańsk;
+5: Hiacynta Róża, Dworcowa 1, Kartuzy;
+7: Arkadiusz Sczypior, Towarowa 9, Kościerzyna;
+8: Maciej Hirsz, Wałowa 15, Gdańsk;
+9: Grzegorz Mistrz, Reja 18, Gdańsk;
+
+Wyświetlanie linii parzystych
+
+sed -n '2~2 p' sedOne.txt
+
+2: Adam Nowak, Piłsudzkiego 22, Kraków;
+4: Magdalena Heheszka, Kolejowa 23, Kiełpino Górne;
+6: Joanna Rutkowska, Przy rzeźni 8, Chojnice;
+8: Maciej Hirsz, Wałowa 15, Gdańsk;
+
+Wyświetlenie znaków niewidocznych
+
+sed -n 'l' sedOne.txt
+
+1: Jan Kowalski, Woronicza 17, Warszawa;$
+2: Adam Nowak, Pi\305\202sudzkiego 22, Krak\303\263w;$
+3: Jan Titit, Chrzanowskiego 15, Gda\305\204sk Gda\305\204sk;$
+4: Magdalena Heheszka, Kolejowa 23, Kie\305\202pino G\303\263rne;$
+5: Hiacynta R\303\263\305\274a, Dworcowa 1, Kartuzy;$
+6: Joanna Rutkowska, Przy rze\305\272ni 8, Chojnice;$
+7: Arkadiusz Sczypior, Towarowa 9, Ko\305\233cierzyna;$
+8: Maciej Hirsz, Wa\305\202owa 15, Gda\305\204sk;$
+9: Grzegorz Mistrz, Reja 18, Gda\305\204sk;$
+$

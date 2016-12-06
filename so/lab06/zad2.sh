@@ -10,4 +10,3 @@ if echo "$liczba" | grep -qE ^\-?[0-9]+$; then
 else
         echo "To nie liczba kolego, nie żartuj sobie ze mnie"
 fi
-

@@ -1,0 +1,12 @@
+Dokumenty
+lista.o
+Muzyka
+node_modules
+npm-debug.log
+Obrazy
+Pobrane
+Publiczny
+Pulpit
+Szablony
+tomek.o
+Wideo

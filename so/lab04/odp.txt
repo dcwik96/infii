@@ -1,11 +1,11 @@
-1.1     sed -n -e '/lekarz/p' danev2.csv
-  2     sed '0~10d' danev2.csv
-  3     sed '1d' danev2.csv
-  4     sed -n '/inżynier/{p;q;}' danev2.csv
-  5     sed 's/pedagog/pedagog opiekunczo-wchowawczy/g' danev2.csv
-  6     sed '/filolog/a\WYZEJ MNIE JEST FILOLOG\' danev2.csv | sed -n '/[fF][iI][lL][oO][lL]/{p}'
-  7     sed -n /.[F-I]/p' danev2.csv
-  8	sed 's/;/ /1' danev2.csv
+1.1     sed -n -e '/lekarz/p' danev2.csv                  // Wypiszą dane tych osób, które są lekarzami
+  2     sed '0~10d' danev2.csv                            // Usunie co 10 linię tego pliku
+  3     sed '1d' danev2.csv                               // Usunie nagłówek pliku
+  4     sed -n '/inżynier/{p;q;}' danev2.csv              // Wypisze pierwszego inżyniera
+  5     sed 's/pedagog/pedagog opiekunczo-wchowawczy/g' danev2.csv          // Podmieni wszystkie słowa pedagog na pedagog opiekuńczo-wychowawczy
+  6     sed '/filolog/a\WYZEJ MNIE JEST FILOLOG\' danev2.csv | sed -n '/[fF][iI][lL][oO][lL]/{p}'      // Dopisze pod każdym filologiem linię WYŻEJ MNIE JEST FILOLOG, a następnie wypisze te pary (filolog,WYŻEJ MNIE JEST FILOLOG).
+  7     sed -n '/.[F-I]/p' danev2.csv                      // osoby pomiędzy nazwiskami zaczynającymi się na F a kończącymi na H (bez litery J)
+  8	    sed 's/;/ /1' danev2.csv                          // Połączy imię i nazwisko w jedno pole. Pozostałe pozostawi bez zmian
   9
 
 2.1     pokazuje ile jest linii w pliku

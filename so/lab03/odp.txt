@@ -1,0 +1,22 @@
+1.  1) grep -c ^ grepExample.txt                                    // Policzą ilość linii
+    2) grep -e ^[A-Z] grepExample.txt                               // Wypiszą linie zaczynające się z wielkiej litery
+    3) grep -e [*.$] grepExample.txt                                // Wypiszą linie kończące się kropką
+    4) grep -c '[^.]$' grepExample.txt                              // Policzą linie nie kończące się kropką
+    5) grep -c [*.$] grepExample.txt                                // Policzą ilość zdań w pliku
+    6) grep -E -o 'polecenie|polecenia' grepExample.txt | wc -w     // Wypiszą ilość występowania słów polecenie i polecenia w pliku grepExample.txt
+
+2.  1)
+
+3.  1) cat trExampleFile.txt | tr "a-zA-Z" "A-Za-z"                 // Przepisze plik trExampleFile.txt wielkimi literami i odwrotnie
+    2) cat trExampleFile.txt | tr "0-9" "$"                         // Zastąpi cyfry znakiem $
+    3) tr -d [:upper:] < trExampleFile.txt                          // Usunie wszystkie wielkie liter
+    4) tr -d '\n' < trExampleFile.txt                               // Usunie znaki nowej lini
+    5) tr -s " " < trExampleFile.txt | tr "\t" " " // na odwrot     // Przerobi wiele spacji w jedną spację oraz usunie tabulacj
+    6) cat nazwa | tr -c '[A-Za-z0-9][\n] ' '[A-Za-z0-9][\n] '      // Zachowa znaki alfanumeryczne, spację i znak nowej linii, a pozostałe znaki usunie
+
+4.  1. cut -d ";" -f 1 < cutExampleFile.txt                         //Wyświetlą imiona pracowników
+    2. cut -d ";" -f 1,2,4 < cutExampleFile.txt | tr ";" " "        //Wyświetlą imię i nazwisko oraz pensję pracowników z pliku cutExampleFile.txt bez znaku średnika (zastępując go innym znakiem)
+    3. cat plik | cut -d ";" -f 3 | sort | uniq -c                  //Wyświetlą, ile osób pracuje na każdym stanowisk
+    4. cat cutExampleFile.txt | cut -d ";" -f 1 | grep -c "a$"      // ile kobiet pracuje
+    5. cat cutExampleFile.txt | cut -d ";" -f 4 | grep -o ".\{1\}$" | tr [a-z] [" "]      //
+       tr -d "Imie" itd

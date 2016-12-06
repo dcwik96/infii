@@ -1,0 +1,12 @@
+1, Jan Kowalski, Woronicza 17, Warszawa
+
+2, Adam Nowak, Piłsudzkiego 22, Kraków
+3, Jan Titit, Chrzanowskiego 15, Gdańsk Gdańsk
+4, Magdalena Heheszka, Kolejowa 23, Kiełpino Górne
+5, Hiacynta Róża, Dworcowa 1, Kartuzy
+
+6, Joanna Rutkowska, Przy rzeźni 8, Chojnice
+7, Arkadiusz Sczypior, Towarowa 9, Kościerzyna
+8, Maciej Hirsz, Wałowa 15, Gdańsk
+
+9, Grzegorz Mistrz, Reja 18, Gdańsk

@@ -2,4 +2,4 @@
 
 echo "Podaj napis"
 read napis
-echo '"'$napis'"'                  
+echo '"'$napis'"'                

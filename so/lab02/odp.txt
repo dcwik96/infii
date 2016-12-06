@@ -1,0 +1,27 @@
+1.  1) cat -v plik    // niewidoczne znaki
+    2) cat -s         // zastąpić wiele pustych wierszy, które występują po sobie jednym pustym wierszem
+    3) cat -n         // numerowanie linii
+    4) less plik      // wyswielenie pliku
+      /szukaneslowo   // za pomoca tego szukamy
+    5) more < plik    // wyswietla plik
+       more plik      // wyswietla plik z informacja procentowa
+
+2.  1) sort -d plik > gdzie     // posortuj i zapisz do innego pliku
+    2) sort -c plik             // sprawdzi czy posortowane, jezeli nie to zwroci błąd
+    3) sort -r plik > gdzie     // posortuje odwrotnie i zapisze do innego pliku
+    4) sort -fu                 // wypisz uniq (-u) i ignoruj wielkosc liter (-f)
+    5) sort -R plik             // przemieszaj plik (Random)
+
+3.  1) head -c 5 plik                         // pierwsze 5 bajtów pliku
+    2) head -n 5 plik                         // pierwsze 5 lini
+    3) tail -n 4 plik                         // ostatnie 4 linie
+    4) head -n 19 Iris.csv | tail -n 10       // od linii 10 do 19
+    5) monitoruje plik, jakie zmiany itd      // opcji -f polecenia tail
+
+4.    Wyświetlą zawartość katalogu domowego oraz jednocześnie
+    zapiszą tę zawartość w pliku tekstowym        ls ~ | tee zad4.txt
+
+      Przepisze zawartość pliku words.txt jednocześnie do dwóch plików
+    tekstowych o nazwach out1.txt oraz out2.txt   cat words.txt | tee out1.txt out2.txt
+
+      Dopisze do pliku out2.txt plik Iris.csv     cat Iris.csv | tee -a out2.txt

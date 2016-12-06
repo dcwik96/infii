@@ -1,0 +1,649 @@
+
+Język programowania AWK
+
+Mateusz Miotk
+
+2 listopada 2016
+Podstwowe informacje
+
+AWK to język przetwarzania i skanowania wzorców, który pozwala na przeszukiwanie jednego lub więcej plików pod kątem rekordów (najczęściej wierszy) dopasowanych do określonych kryteriów. Wiersze są przetwarzane poprzez wykonywanie operacji takich jak przekazanie rekordu do standardowego wyjścia lub zwiększenie wartości licznika po każdym znalezieniu dopasowania. W przeciwieństwie do języków proceduralnych AWK operuje na danych - określasz dane, z którymi chcesz pracować, i wskazujesz językowi AWK zadania do wykonania po znalezieniu wspomnianych danych. Działa on świetnie zarówno z danymi liczbowymi jak i tekstowymi. W głównej mierze wykorzystuje się go do generowania raportów oraz filtrowania tekstów. Jego autorami są Alfred V. Aho, Peter J. Weinberger oraz Brian W. Kernighan.
+Składnia
+
+Polecenie wiersza poleceń powłoki AWK ma następującą składnię:
+
+awk [opcje] [program] [lista-plikow]
+awk [opcje] -f [plik z programem] [lista-plikow]
+
+AWK pobiera dane wejściowe z wskazanych plików lub ze standardowego wejścia.
+Podstawy języka
+
+Program narzędzia AWK składa się z jednego lub więcej liczny wierszy zawierający wzorzec i (lub) akcję o następującej składni:
+
+wzorzec {akcja}
+
+Wzorzec wybiera wiersze z danych wejściowych. Następnie AWK przeprowadza akcję na wszystkich wierszach wybranych przez wzorzec.
+
+Jeżeli wiersz programu nie zawiera wzorca, wówczas AWK wybiera wszystkie wiersze danych wejściowych.
+
+Jeżeli kilka wzorców wybierze ten sam wiersz, wtedy narzędzie AWK wykonuje akcje powiązane z wzorcami, stosując kolejność ich występowania w programie
+
+    UWAGA! Większość dystrybucji systemu Linux zawiera narzędzie gawk lub mawk. Również działa polecenie awk.
+
+Zmienne systemowe w języku AWK
+Nazwa zmiennej 	Znaczenie
+FS 	Separator odstępu wejścia (domyślnie spacja)
+OFS 	Separator odstępu wyjścia
+NF 	Liczba pól
+NR 	Numer konkretnej badanej linii
+RS 	Separator linii (domyślnie znak nowej linii)
+FILENAME 	Nazwa pliku
+Przykłady
+
+Hello world AWK:
+
+awk 'BEGIN { print "Hello, world AWK" }'
+
+Hello, world AWK
+
+Wypisanie pliku (linijka po linijce):
+
+ echo 'Nastepna linia' > test
+ echo 'Kolejna linia' >> test
+ awk '{ print }' test
+
+Nastepna linia
+Kolejna linia
+
+Używanie warunków, wyrażeń regularnych:
+
+awk ' /Kartuzy/ { print }' awkExamples/data.txt
+
+5, Hiacynta Róża, Dworcowa 1, Kartuzy
+
+Plik data.txt
+
+cat awkExamples/data.txt
+
+1, Jan Kowalski, Woronicza 17, Warszawa
+
+2, Adam Nowak, Piłsudzkiego 22, Kraków
+3, Jan Titit, Chrzanowskiego 15, Gdańsk Gdańsk
+4, Magdalena Heheszka, Kolejowa 23, Kiełpino Górne
+5, Hiacynta Róża, Dworcowa 1, Kartuzy
+
+6, Joanna Rutkowska, Przy rzeźni 8, Chojnice
+7, Arkadiusz Sczypior, Towarowa 9, Kościerzyna
+8, Maciej Hirsz, Wałowa 15, Gdańsk
+
+9, Grzegorz Mistrz, Reja 18, Gdańsk
+
+Uruchamianie skryptów w AWK
+
+Polecenia skryptu można zapisać w pliku:
+
+cat awkExamples/scriptTwo.awk
+
+/[0-9]+/ { print "To jakas liczba" }
+/[A-Za-z]+/ { print "To jakies slowo" }
+/^$/ { print "To pusta linia" }
+
+Uruchomienie skryptu z pliku:
+
+awk -f awkExamples/scriptTwo.awk awkExamples/test2.txt
+
+To jakies slowo
+To pusta linia
+To pusta linia
+To jakas liczba
+To pusta linia
+To jakies slowo
+
+Plik test2.txt
+
+cat awkExamples/test2.txt
+
+bla bla bla
+
+
+145245
+
+ala ma kota
+
+Pisanie skryptów w awk (jak w Bash)
+
+#!/usr/bin/awk -f
+{ print }
+
+Musimy nadać temu plikowi prawa wykonywalne czyli:
+
+chmod +x awkExamples/scriptOne.awk
+
+Teraz możemy uruchomić go jak skrypt w języku BASH:
+
+./awkExamples/scriptOne.awk awkExamples/test2.txt
+
+bla bla bla
+
+
+145245
+
+ala ma kota
+
+Wypisanie różnych pól (kolumn) pliku:
+
+awk '{ print $2, $1, $3 }' awkExamples/data.txt
+
+Jan 1, Kowalski,
+
+Adam 2, Nowak,
+Jan 3, Titit,
+Magdalena 4, Heheszka,
+Hiacynta 5, Róża,
+
+Joanna 6, Rutkowska,
+Arkadiusz 7, Sczypior,
+Maciej 8, Hirsz,
+
+Grzegorz 9, Mistrz,
+
+Uzywanie innego domyślnego separatora, którym jest domyślnie spacja:
+
+ awk -F "," '{ print $2 $3}' awkExamples/data.txt
+
+ Jan Kowalski Woronicza 17
+
+ Adam Nowak Piłsudzkiego 22
+ Jan Titit Chrzanowskiego 15
+ Magdalena Heheszka Kolejowa 23
+ Hiacynta Róża Dworcowa 1
+
+ Joanna Rutkowska Przy rzeźni 8
+ Arkadiusz Sczypior Towarowa 9
+ Maciej Hirsz Wałowa 15
+
+ Grzegorz Mistrz Reja 18
+
+Wypisanie linijka po linijce bloku z pliku:
+
+#!/usr/bin/awk -f
+
+wizytowka
+{
+  print ""
+  print $2
+  print $3
+  print $4
+}
+
+./awkExamples/scriptThree.awk awkExamples/data.txt
+
+
+Jan
+Kowalski,
+Woronicza
+
+
+
+
+
+Adam
+Nowak,
+Piłsudzkiego
+
+Jan
+Titit,
+Chrzanowskiego
+
+Magdalena
+Heheszka,
+Kolejowa
+
+Hiacynta
+Róża,
+Dworcowa
+
+
+
+
+
+Joanna
+Rutkowska,
+Przy
+
+Arkadiusz
+Sczypior,
+Towarowa
+
+Maciej
+Hirsz,
+Wałowa
+
+
+
+
+
+Grzegorz
+Mistrz,
+Reja
+
+Użycie specjalnej zmiennej FS (field separator)
+
+#!/usr/bin/awk -f
+
+BEGIN { FS = "," }
+
+{
+  print ""
+  print $2
+  print $3
+  print $4
+}
+
+./awkExamples/scriptThreeMod.awk awkExamples/data.txt | tr -s '\n'
+
+
+ Jan Kowalski
+ Woronicza 17
+ Warszawa
+ Adam Nowak
+ Piłsudzkiego 22
+ Kraków
+ Jan Titit
+ Chrzanowskiego 15
+ Gdańsk Gdańsk
+ Magdalena Heheszka
+ Kolejowa 23
+ Kiełpino Górne
+ Hiacynta Róża
+ Dworcowa 1
+ Kartuzy
+ Joanna Rutkowska
+ Przy rzeźni 8
+ Chojnice
+ Arkadiusz Sczypior
+ Towarowa 9
+ Kościerzyna
+ Maciej Hirsz
+ Wałowa 15
+ Gdańsk
+ Grzegorz Mistrz
+ Reja 18
+ Gdańsk
+
+Wypisanie linii, w których określone pole wyrażone jest przez wyrażenie regularne:
+
+#Wyswietli linie w ktorej miejscowosci zaczynaja sie na K
+awk -F',' ' $4 ~ /K+/ { print } ' awkExamples/data.txt
+
+2, Adam Nowak, Piłsudzkiego 22, Kraków
+4, Magdalena Heheszka, Kolejowa 23, Kiełpino Górne
+5, Hiacynta Róża, Dworcowa 1, Kartuzy
+7, Arkadiusz Sczypior, Towarowa 9, Kościerzyna
+
+#Negacja powyzszego
+awk -F',' ' $4 !~ /K+/ { print } ' awkExamples/data.txt
+
+1, Jan Kowalski, Woronicza 17, Warszawa
+
+3, Jan Titit, Chrzanowskiego 15, Gdańsk Gdańsk
+
+6, Joanna Rutkowska, Przy rzeźni 8, Chojnice
+8, Maciej Hirsz, Wałowa 15, Gdańsk
+
+9, Grzegorz Mistrz, Reja 18, Gdańsk
+
+Policzenie pustych linii: Slowo kluczowe END.
+
+awk -F',' '  /^$/ { ++x } END { print x } ' awkExamples/data.txt
+
+3
+
+Liczenie średniej ocen
+Rozważmy plik:
+
+cat awkExamples/grades.txt
+
+1 Jan Kowalski 5 4 2 3 4
+2 Adam Nowak 1 1 2 3 5
+3 Jan Titit 5 4 6 1 5
+4 Magdalena Heheszka 4 1 1 1 1
+5 Hiacynta Róża 4 5 6 6 6
+6 Joanna Rutkowska 6 5 4 3 2
+7 Arkadiusz Sczypior 1 2 4 4 5
+8 Maciej Hirsz 5 5 5 5 5
+9 Grzegorz Mistrz 5 6 5 6 1
+
+Policzmy średnią ocen każdego ucznia:
+
+#!/usr/bin/awk -f
+{
+  total = $4 + $5 + $6 + $7 + $8
+  avg = total / 5
+  print $2, $3, avg
+}
+
+./awkExamples/scriptFour.awk awkExamples/grades.txt
+
+Jan Kowalski 3.6
+Adam Nowak 2.4
+Jan Titit 4.2
+Magdalena Heheszka 1.6
+Hiacynta Róża 5.4
+Joanna Rutkowska 4
+Arkadiusz Sczypior 3.2
+Maciej Hirsz 5
+Grzegorz Mistrz 4.6
+
+Wypisanie numerów linii (po kolei)
+
+ awk ' { print NR "." $2 } ' awkExamples/grades.txt
+
+1.Jan
+2.Adam
+3.Jan
+4.Magdalena
+5.Hiacynta
+6.Joanna
+7.Arkadiusz
+8.Maciej
+9.Grzegorz
+
+Wypisanie ilości linii:
+
+#!/usr/bin/awk -f
+BEGIN { FS = "," }
+{ print }
+END { print ""
+      print "Przetworzonych " , NR, "rekordow"
+    }
+
+./awkExamples/scriptFive.awk awkExamples/grades.txt
+
+1 Jan Kowalski 5 4 2 3 4
+2 Adam Nowak 1 1 2 3 5
+3 Jan Titit 5 4 6 1 5
+4 Magdalena Heheszka 4 1 1 1 1
+5 Hiacynta Róża 4 5 6 6 6
+6 Joanna Rutkowska 6 5 4 3 2
+7 Arkadiusz Sczypior 1 2 4 4 5
+8 Maciej Hirsz 5 5 5 5 5
+9 Grzegorz Mistrz 5 6 5 6 1
+
+Przetworzonych  9 rekordow
+
+Zmiana separatora wyjścia
+
+#!/usr/bin/awk -f
+BEGIN { FS = ","
+ OFS = ";" }
+{ print $2, $3 }
+END { }
+
+./awkExamples/scriptSix.awk awkExamples/data.txt
+
+ Jan Kowalski; Woronicza 17
+;
+ Adam Nowak; Piłsudzkiego 22
+ Jan Titit; Chrzanowskiego 15
+ Magdalena Heheszka; Kolejowa 23
+ Hiacynta Róża; Dworcowa 1
+;
+ Joanna Rutkowska; Przy rzeźni 8
+ Arkadiusz Sczypior; Towarowa 9
+ Maciej Hirsz; Wałowa 15
+;
+ Grzegorz Mistrz; Reja 18
+
+Wypisanie linii od 3 do 7
+
+awk ' NR > 3 && NR <= 7 { print } ' awkExamples/grades.txt
+
+4 Magdalena Heheszka 4 1 1 1 1
+5 Hiacynta Róża 4 5 6 6 6
+6 Joanna Rutkowska 6 5 4 3 2
+7 Arkadiusz Sczypior 1 2 4 4 5
+
+Wypisanie linii, która ma więcej niż 4 kolumny
+
+awk ' NF >= 5 { print } ' awkExamples/manyFields.txt
+
+Jan Kowalski 3 4 5 7 8 9 5 2
+Marta Kowalska 1 1 1
+
+Plik manyFields.txt
+
+cat awkExamples/manyFields.txt
+
+Jan Kowalski 3 4 5 7 8 9 5 2
+Marta Kowalska 1 1 1
+Gucio Maji 1
+
+Użycie funkcji printf():
+
+awk ' { printf("%s\n", $2) } ' awkExamples/data.txt
+
+Jan
+
+Adam
+Jan
+Magdalena
+Hiacynta
+
+Joanna
+Arkadiusz
+Maciej
+
+Grzegorz
+
+Awk i argumenty z linii poleceń
+
+BEGIN { print n }
+{
+if (n == 1) print "Pierwsza linia"
+if (n == 2) print "Druga linia"
+}
+
+awk -f awkExamples/scriptSeven.awk n=2 awkExamples/grades.txt
+
+
+Druga linia
+Druga linia
+Druga linia
+Druga linia
+Druga linia
+Druga linia
+Druga linia
+Druga linia
+Druga linia
+
+Użycie pętli
+
+#!/usr/bin/awk -f
+{
+sum = 0.0
+for ( i = 4; i <= NF; i++)
+    sum += $i
+}
+{
+avg = sum / (NF - 3)
+ if ( avg > 4) print $2, $3, "ma wysoka srednia"
+      else
+      print $2, $3, "ma niska srednia"
+}
+
+./awkExamples/scriptEight.awk awkExamples/grades.txt
+
+Jan Kowalski ma niska srednia
+Adam Nowak ma niska srednia
+Jan Titit ma wysoka srednia
+Magdalena Heheszka ma niska srednia
+Hiacynta Róża ma wysoka srednia
+Joanna Rutkowska ma niska srednia
+Arkadiusz Sczypior ma niska srednia
+Maciej Hirsz ma wysoka srednia
+Grzegorz Mistrz ma wysoka srednia
+
+Tablice
+
+#!/usr/bin/awk -f
+{
+sum = 0.0
+for ( i = 4; i <= NF; i++){
+    sum += $i
+    }
+avg = sum / (NF - 3)
+students_avg[NR] = avg
+}
+END {
+  print "Oto srednie uczniow"
+  sum = 0
+  for (i = 1; i <= NR; i++){
+    print students_avg[i]
+    sum += students_avg[i]
+  }
+  print "Srednia uczniow wynosi:" , sum / NR
+}
+
+./awkExamples/scriptNine.awk awkExamples/grades.txt
+
+Oto srednie uczniow
+3.6
+2.4
+4.2
+1.6
+5.4
+4
+3.2
+5
+4.6
+Srednia uczniow wynosi: 3.77778
+
+Tablice asocjacyjne
+
+#!/usr/bin/awk -f
+
+{
+z = split($0, array, " ")
+for (i = 1; i <= z; i++)
+   ++table[array[i]]
+}
+END {
+    for (word in table)
+       print word ":" table[word]
+}
+
+./awkExamples/scriptTen.awk awkExamples/article.txt
+
+trying:1
+development:1
+market:1
+computer,:1
+Because:1
+to:4
+worked,:1
+as:3
+–:1
+created:1
+computer:1
+into:1
+him:1
+The:1
+judging:1
+and:3
+solution:1
+his:2
+the:11
+first:1
+in:4
+well:1
+outstanding:1
+he/she:1
+constituted.:1
+is:3
+able:1
+personal:1
+contribution:1
+minicomputer:1
+inventions:2
+of:9
+were:1
+science:1
+on:2
+times:1
+Summary:1
+be:1
+that:1
+rebellion:1
+moving:1
+being:1
+showing:1
+authorities,:1
+computers:1
+inventor:1
+do:1
+work:1
+Polish:3
+example:3
+they:1
+by:1
+particular:1
+paper:1
+suit:1
+it,:1
+least:1
+closer:1
+well-known.:1
+order:1
+202:1
+form:1
+didn't:1
+a:3
+incite:1
+world:1
+Republic:1
+designer:1
+everything:1
+figure:1
+K-:1
+novel:1
+for:1
+him,:1
+People's:1
+which:2
+
+Funkcje
+
+cat awkExamples/scriptEleven.awk
+
+#!/usr/bin/awk -f
+function max (n,m){
+  if (n > m)
+    return n
+  else
+    return m
+}
+{
+print max($1, $2)
+}
+
+./awkExamples/scriptEleven.awk awkExamples/max.txt
+
+2
+4
+100
+7
+0
+
+Połączenie AWK + BASH
+
+#!/bin/bash
+awk '$2 == search' search=$1 $2
+
+./awkExamples/bashAwk.sh "Jan" awkExamples/grades.txt
+
+1 Jan Kowalski 5 4 2 3 4
+3 Jan Titit 5 4 6 1 5
+
+Literatura
+
+M. G. Sobell, Linux. Programowanie w powłoce. Praktyczny przewodnik, Wydawnictwo Helion, 2013.

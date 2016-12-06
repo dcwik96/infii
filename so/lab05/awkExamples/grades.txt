@@ -1,0 +1,9 @@
+1 Jan Kowalski 5 4 2 3 4
+2 Adam Nowak 1 1 2 3 5
+3 Jan Titit 5 4 6 1 5
+4 Magdalena Heheszka 4 1 1 1 1
+5 Hiacynta Róża 4 5 6 6 6
+6 Joanna Rutkowska 6 5 4 3 2
+7 Arkadiusz Sczypior 1 2 4 4 5
+8 Maciej Hirsz 5 5 5 5 5
+9 Grzegorz Mistrz 5 6 5 6 1

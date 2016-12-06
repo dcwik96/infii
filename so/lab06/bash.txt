@@ -1,0 +1,136 @@
+
+Język skryptowy BASH
+
+Mateusz Miotk
+
+9 listopad 2016
+Krótko o Bashu
+
+Język poleceń bash’a może być uważany za skryptowy język programowania. Oznacza to, że polecenia mogą nie tylko być używane w linii poleceń, ale również mogą być umieszczane (w większej liczbie) w plikach (nazwanych skryptami), które następnie są uruchamiane jako całość. W związku z tym skrypty muszą mieć nadane zarówno prawo do odczytu (r), jak i do wykonywania (x) dla tego, kto je będzie uruchamiał.
+Uwaga
+
+Języki skryptowe (interpretowane) różnią się od języków kompilowanych tym, że programy w nich napisane nie podlegają kompilacji (tłumaczeniu w całości i dołączeniu podprogramów bibliotecznych) na język wewnętrzny komputera, tylko pojedyncze instrukcje podlegają tłumaczeniu na bieżąco (są interpretowane przez program interpretera poleceń - w tym przypadku przez bash’a). Niektóre języki programowania (na przykład BASIC) mogą być używane zarówno jako języki interpretowane, jak i kompilowane. Programy skompilowane są wykonywane dużo szybciej, niż programy interpretowane, ale wprowadzenie w nich zmian wymaga później ponownej kompilacji. W systemach uniksowych zazwyczaj jest dostępnych co najmniej kilka różnych interpreterów, z których jeden (zwykle bash) uważany jest za interpreter domyślny. W przypadku, gdy skrypt przeznaczony jest do wykonania pod bieżącym interpreterem (tym, z którym aktualnie współpracujemy w oknie tekstowym), nie ma potrzeby umieszczania na jego początku żadnej dodatkowej informacji, natomiast jeśli chcemy wymusić interpretację skryptu przez pewien wybrany interpreter, umieszczamy na jego początku linię sterującą o postaci:
+
+#!........ (bezwzgledna sciezka dostepu do programu interpretera)
+
+Przykłady:
+
+#!/bin/bash
+#!/bin/csh
+#!/bin/fish
+#!/bin/sed -f
+
+Uruchamianie skryptów w BASH
+
+Skrypty, jeśli otrzymają prawa wykonywalne mogą zostać uruchomione przy pomocy polecenia source lub przy użyciu symbolu . Powłoka BASH wykorzystuje symbole (),[] oraz $ na wiele różnych sposobów. Sposoby użycia tych symboli:
+Symbol 	Polecenie
+() 	Podpowłoka
+$() 	Podstawienie polecenia
+(()) 	Obliczenia arytmetyczne; synonim polecenia let
+$(()) 	Rozwijanie wyrażeń arytmetycznych
+[] 	Polecenie test
+[[]] 	Wyrażenie warunkowe
+Hello BASH
+
+#!/bin/bash
+echo "Hello world";
+
+source HelloBash.sh
+
+Hello world
+
+./HelloBash.sh
+
+Hello world
+
+Instrukcja sterująca IF…ELSE
+
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+  echo "Musisz podać co najmniej jeden argument"
+else
+  echo "Podałeś jakiś argument"
+fi
+exit 0
+
+./IFELSE.sh argument
+
+Podałeś jakiś argument
+
+./IFELSE.sh
+
+Musisz podać co najmniej jeden argument
+
+Wyrażenia arytmetyczne i pętla
+
+#!/bin/bash
+
+A=2
+B=4
+C=$(( $A*$B ))
+echo $C
+
+echo "Teraz wypisze petlę:"
+
+for (( i=0; i<10; i++ ))
+do
+   echo "i=$i"
+done
+exit 0
+
+./Operation.sh
+
+8
+Teraz wypisze petlę:
+i=0
+i=1
+i=2
+i=3
+i=4
+i=5
+i=6
+i=7
+i=8
+i=9
+
+Tablice w BASHU
+
+#!/bin/bash
+
+array[0]="Mama"
+array[1]="Tata"
+array[2]="Zosia"
+array[3]="Samosia"
+
+for (( i=0; i<4; i++ ))
+do
+  echo ${array[$i]}
+done
+exit 0
+
+source Tables.sh
+
+Mama
+Tata
+Zosia
+Samosia
+
+Parametry w BASHU
+
+Skrypty (podobnie, jak inne programy uruchomiane w trybie tekstowym) mogą w chwili swojego uruchomienia otrzymać pewną liczbę argumentów wywołania podanych w linii poleceń:
+
+nazwa_programu arg1 arg2 arg3 ... argN
+
+Podawanie argumentów jest najbardziej podstawowym sposobem podawania danych dla programu (zwykle są to dane o charakterze sterującym, a właściwy strumień danych jest podawany przez wejście standardowe). Programy mogą mieć stałą lub zmienną liczbę argumentów.
+Parametr 	Opis
+$0 	Nazwa programu
+$1 … $N 	Parametry pozycyjne
+$$ 	Identyfikator PID
+$! 	Identyfikator PID ostatniego procesu uruchomionego w tle
+$? 	Kod zakończenia działania procesu
+$# 	Liczba argumentów w wierszu polecenia
+$- 	Flagi powłoki BASH
+$_ 	Ostatni argument poprzedniego wykonanego polecenia
+$@ 	Wszystkie argumenty

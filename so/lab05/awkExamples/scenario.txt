@@ -1,0 +1,72 @@
+Hello world:
+echo 'Ta linia jest fajna' > test
+awk '{ print "Hello, world AWK" }'
+#Bez wpisania nazwy pliku bedzie wczytywalo linie i zawsze wypisywalo hello world!
+
+#Wypisanie pliku (linijka po linijce)
+echo 'Nastepna linia' >> test
+echo 'Kolejna linia' >> test
+awk '{ print }' test
+
+#Slowo kluczowe BEGIN
+awk 'BEGIN { print "Hello world AWK" }'
+#Jeśli jest tak jak powyżej to awk nie będzie oczekiwał na wczytanie linii
+
+#Użycie wyrażeń regularnych
+awk ' /Gdańsk/ { print }' data.txt  #wypisuje wszystkie linie z Gdańskiem
+
+#Skrypty w AWK -> patrz scriptOne.awk, scriptTwo.awk
+#Uruchomienie: awk -f <nazwa skryptu> <nazwa pliku>
+
+#Pola -> dzialanie na pliku data.txt
+#Wypisanie roznych pol:
+awk '{ print $2, $1, $3 }' data.txt # przecinek daje spacje
+#Jak wypisac zmienna w dolarze:
+awk ' BEGIN { one = 1; } { print $(one) }' data.txt
+#Uzywanie innego separatora (domyslnie spacja)
+awk -F"," '{ print $2 $3}' data.txt # Wypisze 2 i 3 kolumne (oddzielona przecinkiem)
+#Wypisanie bloku ludzi -> ala wizytowka -> scriptThree.awk
+
+#Separator w skrypcie: -> FS -> scriptThreeMod.awk
+
+#Wypisanie linii w których jakieś pole ma określone wyrażenie regularne
+awk -F',' ' $4 ~ /K+/ { print } ' data.txt #Wyswietli linie w której miejscowosci zaczynaja sie na K
+#Negacja powyzszego
+awk -F',' ' $4 !~ /K+/ { print } ' data.txt
+#Policzenie pustych linii: Slowo kluczowe END -> sprawdzenie dla linii do momentu END
+awk -F',' '  /^$/ { ++x } END { print x } ' data.txt
+
+Policzenie sredniej ocen w pliku grades.txt -> scriptFour.awk
+
+ZMIENNE SYSTEMOWE W AWK:
+FS -> separator odstepu wejscia (domyslnie spacja)
+OFS -> separator odstepu wyjscia
+NF -> Liczba pol
+NR -> Numer konkretnej czytanej linii
+RS -> separator rekordow (linii -> domyslnie \n)
+FILENAME -> nazwa pliku
+
+# Wypisanie numerow linii: ( Po kolei )
+awk ' { print NR "." $2 } ' grades.txt
+
+#Wypisanie ilosci linii -> scriptFive.awk
+#Zmiana separatoru wyjscia -> scriptSix.awk
+
+#Wypisanie linii od 3 do 7
+awk ' NR > 3 && NR <= 7 { print } ' grades.txt
+
+#Wypisanie linii, które mają więcej niż 4 pola
+awk ' NF >= 5 { print } ' manyFields.txt
+
+#Użycie printf
+awk ' { printf("%s\n", $2) } ' data.txt
+
+#Awk i parametry: awk -f scriptSeven.awk k=2 grades.txt
+
+#For / while -> scriptEight.awk grades.txt
+
+#Tablice -> scriptNine.awk (grades.txt) scriptTen.awk (article.txt)
+
+#Funkcje -> scripEleven.awk (max.txt)
+
+# Bash + awk -> bashAwk.sh ./bashAwk.sh "Jan" grades.txt

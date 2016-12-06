@@ -1,0 +1,3 @@
+Jan Kowalski 3 4 5 7 8 9 5 2
+Marta Kowalska 1 1 1 
+Gucio Maji 1
