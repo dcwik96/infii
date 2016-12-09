@@ -2,3 +2,26 @@
     kot.txt ---x-w-r-- 124;
     main.c -rw---x--- 610;
     styl.java 777
+
+
+    Octal value : Permission
+   0 : read, write and execute
+   1 : read and write
+   2 : read and execute
+   3 : read only
+   4 : write and execute
+   5 : write only
+   6 : execute only
+   7 : no permissions
+
+   r : read
+   w : write
+   x : execute
+   u : User ownership (user who owns the file)
+   g : group ownership (the permissions granted to other users who are members of the file’s group)
+   o : other ownership (the permissions granted to users that are in neither of the two preceding categories)
+
+
+   000	all	all	all
+007	all	all	none
+027	all	read / execute	none

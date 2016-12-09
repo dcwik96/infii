@@ -1,16 +1,58 @@
-1.1 awk ' /filolog/ { print }' daneCorrect.csv
-1.2 skrypt
-1.3 awk -F',' '  /Kwiatowa 56/ { ++x } END { print x } ' daneCorrect.csv
-1.4 awk ' NR >= 1 { print } ' daneCorrect.csv
-1.5 skrypt
-1.6 awk -F';' ' $2 ~ /F+/ || $2 ~ /A+/ { print } ' daneCorrect.csv
-1.7 awk -F';' '{s+=$6} END {print s/NR-1}' daneCorrect.csv
-1.8 skrypt
-1.9 domowe
-1.10 domowe
-~                                                                                       
-~                                                                                       
-~                                                                                       
-~                                                                                       
-~                                                                                       
-~                  
+1.1 // Wszyscy filologowie
+awk ' /filolog/ { print }' daneCorrect.csv
+
+1.2 // Pierwszych trzech pedagogow
+#!/usr/bin/awk -f
+/pedagog/ {
+x++
+if (x <= 3) { print }
+}
+
+1.3 // Ile osob mieszka pod adresem Kwiatowa
+awk -F',' '  /Kwiatowa 56/ { ++x } END { print x } ' daneCorrect.csv
+
+1.4 // Usun naglowek pliku
+awk ' NR >= 1 { print } ' daneCorrect.csv
+
+1.5 // Co druga linia pliku
+#!/usr/bin/awk -f
+{
+  if(NR%2 == 0) {print}
+}
+
+1.6 // z nazwiskami na F lub na H
+awk -F';' ' $2 ~ /F+/ || $2 ~ /A+/ { print } ' daneCorrect.csv
+
+1.7 // srednia wieku dla wszystkich
+awk -F';' '{s+=$6} END {print s/NR-1}' daneCorrect.csv
+
+1.8 // srednia dla poszczegolnych zawodow
+#!/usr/bin/awk -f
+{
+z = split($0, array, " ")
+for (i = 1; i <= NR; i++)
+   ++table[array[i]]
+}
+END {
+    for (word in table)
+       print word ":" table[word]
+}
+
+1.9 // ile kobiet i mezczyzn przekracza srednia wieku
+#!/usr/bin/awk -f
+{
+if ($6 >= 40){x++}
+ {print x}
+}
+
+1.10 // ile imion wystepuje w kazdym woj
+#!/usr/bin/awk -f
+{
+z = split($0, array, " ")
+for (i = 1; i <= z; i++)
+   ++table[array[i]]
+}
+END {
+    for (word in table)
+       print word ":" table[word]
+}
