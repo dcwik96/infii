@@ -10,12 +10,14 @@ class Okno extends JFrame implements ActionListener
 {
   JButton guzikOff, guzikData;
   JLabel data;
+
   JButton zrobGuzik(int x, int y, int w, int h, String t){
     JButton b = new JButton(t);
     b.setBounds(x,y,w,h);
     b.addActionListener(this);
     return b;
   }
+
   Okno(){
     super("Okno");
     //setTitle("Tytul"); nie potrzeba bo mamy juz w super
@@ -28,24 +30,23 @@ class Okno extends JFrame implements ActionListener
     //guzikOff = new JButton("Zakończ");
     //guzikOff.setBounds(10,10,150,30);
     //guzikOff.addActionListener(this);
-    guzikOff = zrobGuzik(10,10,150,30,"Zakończ");
-    add(guzikOff);
-    guzikData = zrobGuzik(10,50,150,30,"Pokaż Date");
-    add(guzikData);
+    add(guzikOff = zrobGuzik(10,10,150,30,"Zakończ"));
+    add(guzikData = zrobGuzik(10,50,150,30,"Pokaż Date"));
     data = new JLabel("<--ciśnij");
     data.setBounds(170,50,200,30);
     add(data);
   }
+
   public void actionPerformed(ActionEvent e){
     Object source = e.getSource();
     if( source == guzikOff ){ this.dispose(); }
     else if( source == guzikData ) {
-      //System.out.println("Gdzie data");
       data.setText( new java.util.Date().toString() );
       data.setForeground( Color.BLUE );
       data.setFont( new Font("Monospace",Font.BOLD,12) );
     }
   }
+
 }
 
 public class ProbaOkno
