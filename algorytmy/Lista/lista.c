@@ -1,151 +1,170 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
 
-/*CREATE STRUCTURE*/
-struct Node{
-  char data[20];
-  struct Node *next;
-  struct Node *prev;
-};
+/*STWORZENIE LISTY*/
+typedef struct List{
+  char* slowo;
+  struct List *next;
+  struct List *prev;
+}list;
 
-struct Node* head;
-struct Node* last;
-struct Node* current;
+list *lista1 = NULL;
+list *lista2 = NULL;
+list *lista3 = NULL;
 
-/*CHECK IF LIST IS EMPTY*/
-bool isEmpty() {
-  return head == NULL;
+/*WSTAWIANIE NOWEGO ELEMENTU NA LISTE*/
+void WSTAW(list **head, char* word)
+{
+  list *nowy=(list *)malloc(sizeof(list));
+  nowy->slowo = word;
+  nowy->next = *head;
+  nowy->prev = NULL;
+  *head = nowy;
 }
 
-/*ADD DATA AT THE BEGINING OF LIST*/
-void AddAtBegin()
+/*DRUKOWANIE LISTY*/
+void DRUKUJ(list *element)
 {
-  char newdata[20];
-  printf("Podaj dane ktore chesz dodac na liste: ");
-  scanf("%19s",newdata);
-
-  struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-  strcpy(newNode->data,newdata);
-
-  if(isEmpty()) last = newNode;
-  else  head->prev = newNode;
-
-  newNode->next = head;
-  head=newNode;
-}
-
-/*PRINT WHOLE LIST*/
-void PrintNode()
-{
-  int i=1;
-  struct Node* temp = head;
-  printf("Drukuje Liste\n");
-  while (temp != NULL) {
-    printf("%i\t%s\n",i,temp->data);
-    temp = temp->next;
-    i++;
+  while(element!=NULL){
+    printf("%s ", element->slowo) ;
+    element=element->next;
   }
   printf("\n");
 }
 
-/*DELETE DATA FROM LIST WHICH IS GIVEN BY PERSON*/
-struct Node* DeleteGiven(char search[])
+/*WYSZUKIWANIE ELEMENTU LISTY*/
+list* SZUKAJ(list* element, char* word)
 {
-  struct Node* current = head;
-
-  if (head == NULL)
-    return NULL;
-
-  while (strcmp(current->data,search) != 0) {
-    if (current->next == NULL)  return NULL;
-    else  current = current->next;
+  while(element!=NULL){
+    if(element->slowo == word){
+      printf("\nZnaleziono '%s' na liscie\n", word);
+      return element;
+    }
+  element=element->next;
   }
-
-  if (current == head)  head = head->next;
-  else  current->prev->next = current->next;
-
-  if (current == last)  last = current->prev;
-  else  current->next->prev = current->prev;
-
-  return current;
+  printf("\nElementu nie znaleziono na liscie\n");
+  return NULL;
 }
 
-/*FIND AND PRINT ONE DATA GIVEN BY PERSON*/
-struct Node* FindGiven(char search[])
-{
-  struct Node* current = head;
+/*USUWANIE ELEMENTU LISTY*/
+void USUN(list** head, char* word){
+  list* pierwszy = *head;
+  list* poprzedni;
+  list* tmp = *head;
 
-  if (head == NULL)  return NULL;
-
-  while (strcmp(current->data,search) != 0) {
-    if (current->next == NULL)  return NULL;
-    else  current = current->next;
-  }
-printf("%s\n",current->data);
-  return current;
-}
-
-/*CLEAR ALL LIST --NOT WORKING*/
-void ClearAll()
-{
-  struct Node* current = head;
-
-  while (head != NULL) {
-    if (current->next == NULL)  return NULL;
-    else  current = current->next;
-  }
-
-  if (current == head)  head = head->next;
-  else  current->prev->next = current->next;
-
-  if (current == last)  last = current->prev;
-  else  current->next->prev = current->prev;
-
-}
-
-/*MAIN*/
-int main()
-{
-  head = NULL;
-  char wyb;
-  do{
-    printf("A-dodaj, D-usun, F-szukaj studenta, S-pokaz liste, C-wyczysc liste, E-zakoncz\n");
-    scanf("%c",&wyb);
-    switch(wyb) {
-      case 'A':
-      case 'a':
-        AddAtBegin();
-      break;
-      case 'D':
-      case 'd':
-        printf("Podaj co chcesz usunąć: ");
-        char search[20];
-        scanf("%19s",search);
-        DeleteGiven(search);
-      break;
-      case 'F':
-      case 'f':
-        printf("Podaj czego szukasz: ");
-        scanf("%19s",search);
-        FindGiven(search);
-      break;
-      case 'S':
-      case 's':
-        PrintNode();
-      break;
-      case 'C':
-      case 'c':
-        ClearAll();
-      case 'E':
-      case 'e':
-        return 0;
-      break;
-      default:
-      break;
+  while(tmp != NULL){
+    if(tmp->slowo == word){
+      if(tmp == *head){
+        *head = tmp->next;
+        return;
+      }
+      else{
+        poprzedni->next = tmp->next;
+        free(tmp);
+        return;
+      }
+    }
+    else{
+      poprzedni=tmp;
+      tmp = tmp->next;
     }
   }
-  while(scanf("%c",&wyb));
+}
+
+/*SCALANIE LIST*/
+void SCAL(list** list1, list** list2, list** list3){
+  list *tmp;
+  *list3 = *list1;
+  tmp = *list3;
+  while(tmp->next != NULL){
+    tmp=tmp->next;
+  }
+  tmp->next=*list2;
+  (*list2)->prev = tmp;
+  *list1 = NULL;
+  *list2 = NULL;
+}
+
+/*LISTA BEZ POWTORZEN*/
+list* BEZPOWTORZEN(list* head){
+  list *element1, *element2, *duplikat, *adrespowrotny;
+  adrespowrotny = head;
+  element1 = head;
+  //Sprawdzamy elementy jeden po drugim
+  while(element1 != NULL && element1->next != NULL)
+  {
+    element2 = element1;
+    //Porównujemy element z reszta elementow
+    while(element2->next != NULL)
+    {
+      //Jesli kopia to ja kasujemy
+      if(element1->slowo == element2->next->slowo)
+      {
+        duplikat = element2->next;
+        element2->next = element2->next->next;
+        free(duplikat);
+      }
+      else
+      {
+        element2 = element2->next;
+      }
+    }
+    element1 = element1->next;
+  }
+  return adrespowrotny;
+}
+
+/*KASOWANIE LISTY*/
+void KASUJ(list* head){
+  list *prev;
+  prev=head;
+  head=head->next;
+  while(head!=NULL){
+    free(prev);
+    prev=head;
+    head=head->next;
+  }
+  free(prev);
+  printf("Skasowano liste.\n");
+}
+
+int main(){
+  /*wstawianie danych do listy pierwszej i nastepnie jej wydruk*/
+  WSTAW(&lista1, "Pierwsza");
+  WSTAW(&lista1, "Druga");
+  WSTAW(&lista1, "Trzecia");
+  WSTAW(&lista1, "Czwarta");
+  printf("Lista pierwsza : \n");
+  DRUKUJ(lista1);
+  /*wstawianie danych do listy drugiej i nastepnie jej wydruk*/
+  WSTAW(&lista2, "Czwarta");
+  WSTAW(&lista2, "Szosta");
+  WSTAW(&lista2, "Siodma");
+  WSTAW(&lista2, "Osma");
+  printf("\nLista druga : \n");
+  DRUKUJ(lista2);
+  /*szukanie elementu w liscie*/
+  list* listaposzukaniu;
+  listaposzukaniu = SZUKAJ(lista1, "Druga");
+  /*usuwanie elementu z listy*/
+  USUN(&lista1, "Trzecia");
+  printf("\nLista po skasowaniu\n");
+  DRUKUJ(lista1);
+  /*scalanie list*/
+  printf("\nScalamy liste1 i liste2 w liste3 : \n");
+  SCAL(&lista1, &lista2, &lista3);
+  DRUKUJ(lista3);
+  /*usuwanie powtorzen z list*/
+  printf("\nLista3 bez powtorzen :\n");
+  list* bezpowto;
+  bezpowto = BEZPOWTORZEN(lista3);
+  DRUKUJ(bezpowto);
+  //KASUJ(lista3);
+  DRUKUJ(lista1);
+  DRUKUJ(lista2);
+  free(lista3);
+  free(lista2);
+  free(lista1);
   return 0;
 }

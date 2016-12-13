@@ -1,9 +1,9 @@
 //       {m                              dla n=0
-//f(n,m)={1                              dla n=1
-//       {0                              dla n=2
+//f(n,m)={0                              dla n=1
+//       {2                              dla n=2
 //       {f(n-1,m)+2*f(n-2,m)-f(n-3,m)   w pozostałych przypadkach
-//(1)Pierwszy argument przekazywany przez rejestr EBX, pozostałe argumenty przekazywane przez stos.
-//(2)Wynik zwracany przez rejestr ECX.
+//(1)Pierwszy argument przekazywany przez rejestr ecx, pozostałe argumenty przekazywane przez stos.
+//(2)Wynik zwracany przez rejestr edx.
 //(3)Za uporządkowanie stosu odpowiada wywołujący funkcję.
 //(4)Wywoływana funkcja musi zachować wszystkie rejesty(oprócz rejestru, w którym zwracany jest wynik).
 
@@ -12,15 +12,15 @@
   .text
 
 main:
-	mov eax,10       //zmienna m
-  mov ebx,4          //zmienna n
-  xor ecx,ecx
+	mov eax,10       							//zmienna m
+  mov ecx,4          						//zmienna n
   xor edx,edx
-  push eax			//przekazanie m przez stos
-  call f            //wywołanie funkcji
-	add esp, 4		//czyszczenie stosu
+  xor ebx,ebx
+  push eax											//przekazanie m przez stos
+  call f           			 				//wywołanie funkcji
+	add esp, 4										//czyszczenie stosu
 //wypisanie wyniku
-  push ecx
+  push edx
 	push offset msg
 	call printf
   add esp,8
@@ -28,84 +28,84 @@ main:
   mov eax,0
 	ret
 f:
-  mov ecx,0           //zerowanie rejestru z wynikiem
+  mov edx,0           					//zerowanie rejestru z wynikiem
 //zapamietane rejestrow na stosie
   push ebp
-  mov ebp, esp	   //zapamietanie miejsca stosu
+  mov ebp, esp	   							//zapamietanie miejsca stosu
   push eax
+  push ecx
   push ebx
-  push edx
 //******************
 //wczytanie zmiennej m[eax] przez stos
   mov eax, [ebp+8]
 //******************
 
 //przypadek n=0
-  cmp ebx,0
+  cmp ecx,0
   jne a1
-  mov ecx,eax
+  mov edx,eax
   jmp koniec
 a1:
 //******************
 //przypadek n=1
-  cmp ebx,1
+  cmp ecx,1
   jne a2
-  mov ecx,1
+  mov edx,0
   jmp koniec
 a2:
 //******************
 //przypadek n=2
-  cmp ebx,2
+  cmp ecx,2
   jne a3
-  mov ecx,0
+  mov edx,2
   jmp koniec
 a3:
 //******************
 //pozostałe przypadki
 //f(n-1,m)
-  push ebx			//zapamietanie wartosci n
-  sub ebx,1           //ustawienie ebx na n-1
-  push ecx            //zapamietanie wyniku
+  push ecx											//zapamietanie wartosci n
+  sub ecx,1           					//ustawienie ecx na n-1
+  push edx            					//zapamietanie wyniku
 //wywołanie funkcji
   push eax
   call f
   add esp, 4
-  pop edx				//do edx wpisujemy ostatnia wartość na stosie czyli stare ecx
-  add ecx,edx			//do nowego wyniku dodajemy stary
-  pop ebx				//przywaracamy stare n
+  pop ebx												//do ebx wpisujemy ostatnia wartość na stosie czyli stare edx
+  add edx,ebx										//do nowego wyniku dodajemy stary
+  pop ecx												//przywaracamy stare n
 //******************
 //2*f(n-2,m)
-  push ebx            //zapamietanie wartosci n
-  sub ebx,2           //ustawienie ebx na n-2
-  push ecx            //zapamietanie wyniku
+  push ecx            					//zapamietanie wartosci n
+  sub ecx,2           					//ustawienie ecx na n-2
+  push edx            					//zapamietanie wyniku
 //wywołanie funkcji
   push eax
   call f
   add esp, 4
-  pop edx				//do edx wpisujemy ostatnia wartość na stosie czyli stare ecx
-  add ecx,ecx         //podwajamy nowy wynik (bo 2*f(n-2,m))
-  add ecx,edx         //do nowego wyniku dodajemy stary
-  pop ebx             //przywaracamy stare n
+  pop ebx												//do ebx wpisujemy ostatnia wartość na stosie czyli stare edx
+  add edx,edx         					//podwajamy nowy wynik (bo 2*f(n-2,m))
+  add edx,ebx        	 					//do nowego wyniku dodajemy stary
+  pop ecx             					//przywaracamy stare n
 //******************
 //-f(n-3,m)
-  push ebx            //zapamietanie wartosci n
-  sub ebx,3           //ustawienie ebx na n-3
-  push ecx            //zapamietanie wyniku
+  push ecx            					//zapamietanie wartosci n
+  sub ecx,3           					//ustawienie ecx na n-3
+  push edx            					//zapamietanie wyniku
 
   push eax
   call f
   add esp, 4
 
-  pop edx             //do edx wpisujemy ostatnia wartość na stosie czyli stare ecx
-  sub edx,ecx         //od starego wyniku odejmujemy nowy (bo -f(n-3,m))
-  mov ecx,edx         //przenosimy wynik do ecx
-  pop ebx             //przywaracamy stare n
+  pop ebx             					//do ebx wpisujemy ostatnia wartość na stosie czyli stare edx
+  sub ebx,edx         					//od starego wyniku odejmujemy nowy (bo -f(n-3,m))
+  mov edx,ebx         					//przenosimy wynik do edx
+  pop ecx             					//przywaracamy stare n
 //******************
 
 koniec:
 //przywracanie rejestrów
-  pop edx
   pop ebx
+  pop ecx
   pop eax
   pop ebp
 //******************
